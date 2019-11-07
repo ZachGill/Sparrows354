@@ -1,0 +1,3 @@
+Neat things that were made with Crystal:
+
+Lilith - OS written mainly in Crystal: https://github.com/ffwff/lilith
