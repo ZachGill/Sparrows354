@@ -11,6 +11,7 @@
 	<a class="active" href="#">Home</a>
     <a href="#overview">Overview</a>
     <a href="#comparison">Comparison</a>
+    <a href="#concurrency">Concurrency</a>
 </div>
 
 
@@ -217,6 +218,47 @@
     </div>
     <div style="display: flex" class="justify-content-center">
         <iframe frameborder="0" style="height: 50vh; width: 50vw" src="https://repl.it/@Pizzahut91/Crystallll?lite=true&outputonly=1"></iframe>
+    </div>
+    <!-- Concurrency (Chris Haney) -->
+    <hr id="concurrency"></hr>
+    <h2 style="text-align: center">Concurrency</h2>
+    <br> At this time, a Crystal program executes in a single operating system thread
+    <br> "... Except the Garbage Collector (GC) which implements a concurrent mark-and-sweep (currently Boehm GC)."
+    <br> This means that Crystal doesn't currently support parallelism, but it does support concurrency. <br>
+    <h2>What is concurrency?</h2>
+    <br> Concurrency allows programmers to execute things the way they want instead of purely sequentially.
+    <br> The most straightforward use of concurrency is to execute something else while waiting for user input.
+    <h2>Crystal achieves concurrent processing in two ways...</h2>
+    <h3>Fibers</h3>
+    An object designed to act like an operating system thread, with some key differences...
+    <br> Each fiber is assigned its own lightweight call stack (starts at 4KB, up to 8MB)
+    <br> Fibers use cooperative multitasking (They tag in and tag out as necessary) while standard threads use pre-emptive multitasking (I'm gonna run whether you like it or not!)
+    <br> In Crystal, all programs invisibly spawn a main fiber which can yield execution to other fibers once it completes.
+    <br>
+    <br> Pros: Remove the overhead of thread context switching, and can make complex concurrent/parallel code more readable/maintainable for humans.
+    <br> Cons: Because they are created in a thread, they are stuck in the thread they are created in. If a fiber gets stuck, no other fibers can execute. <br>
+    <h3>Channels</h3>
+    Channels allow Crystal programs to communicate data between fibers without having to share memory.
+    <br>
+    <br> Pros: As long as you only communicate data with channels accessing and modifying data doesn't require things like locks and mutexes.
+    <br> Cons: A Channel in Crystal can only have one object sent/received at a time. The more data you need to pass around, the more channels you will need.<br>
+    <br> Example 1: Simple Fiber/Channel Usage <br><br>
+    <div align="center">
+        <iframe src="https://play.crystal-lang.org/#/r/817w/edit"
+                width="70%"
+                height="500px"
+                frameborder="1"
+                scrolling="yes">
+        </iframe>
+    </div>
+    <br> Example 2: Race Condition <br><br>
+    <div align="center">
+        <iframe src="https://play.crystal-lang.org/#/r/81ay/edit"
+                width="70%"
+                height="500px"
+                frameborder="1"
+                scrolling="yes">
+        </iframe>
     </div>
 </body>
 
