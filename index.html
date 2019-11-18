@@ -1,22 +1,220 @@
-<html>
-    <head>
-        <link rel="stylesheet" href="./bootstrap/bootstrap.min.css" />
-    </head>
+<!DOCTYPE html>
+<html lang="en">
 
-    <body>
-        <nav class="navbar navbar-light bg-light">
-            <a class="navbar-brand" href="#">
-                <img src="./crystal-brand.svg" width="40" height="40" alt="">
-                The Crystal Programming Language
-            </a>
-        </nav>
+<head>
+	<link rel="stylesheet" type="text/css" href="bootstrap/navstyle.css">
+	<link rel="stylesheet" type="text/css" href="./bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="./styles.css">
+</head>
+<div class="topnav sticky-top d-flex opacity-80">
+    <img style="margin: 5px" src="./crystal-brand.svg" width="45" height="45" alt="">
+	<a class="active" href="#">Home</a>
+    <a href="#overview">Overview</a>
+    <a href="#comparison">Comparison</a>
+</div>
 
-        <div style="display: flex" class="justify-content-center">
-            <iframe frameborder="0" style="height: 50vh; width: 50vw" src="https://repl.it/@Pizzahut91/Crystallll?lite=true&outputonly=1"></iframe>
+
+<body>
+    <!-- <nav class="navbar navbar-light sticky-top bg-light">
+        <a class="navbar-brand" href="#">
+            <img src="./crystal-brand.svg" width="40" height="40" alt="">
+            Crystal - Sparrows
+        </a>
+    </nav> -->
+    <h2 id="overview">History, References, Examples and Install</h1>
+
+    <div class="card container content">
+        <div class="card-body">
+            <h4 class="card-title">History and Overview</h4>
+            <p class="card-text">Crystal is an object-oriented programming language that was designed by Ary Borenszweig, Juan Wajnerman, Brian
+                Cardiff, along over 300 other contributors.
+                The language began development in June 2011, in order to create a language that had the productivity of Ruby but
+                the speed of a compiled language (C in particular).
+                It is a compiled language that has static type-checking. Crystal is syntactically similar to Ruby and the first
+                ever Crystal compiler was written in Ruby.
+                The first crystal compiler was written in November 13th, officially making the language self-hosting. The first
+                official release was in June 2014. </p>
         </div>
-        
-        <footer style="display: flex" class="footer justify-content-center">
-            <span class="text-muted" style="text-align: center;">Sparrows</span>
-        </footer>
-    </body>
-</html>
+    </div>
+    
+    <div class="card container content">
+        <div class="card-body">
+            <h4 class="card-title">Documentation, Tutorials, and References</h4>
+            <div class="card-text">
+                <p>Tutorial: <a href="https://www.youtube.com/watch?v=DxFP-Wjqtsc">Learn Crystal in one Video</a></p>
+                <p>Documentation: <a href="https://crystal-lang.org/docs/">Official Crystal Documentation Site</a></p>
+                <p>API: <a href="https://crystal-lang.org/api/0.31.1/">Official Crystal API</a></p>
+                <p>Other Helpful Reference: <a href="https://crystal-lang.org/reference/">Crystal-Lang Reference</a></p>
+                <p>Syntax Reference: <a href="https://crystal-lang.org/reference/syntax_and_semantics/">Crystal-Lang Syntax Help</a>
+                </p>
+            </div>
+        </div>
+    </div>
+	
+	<div class="card container content">
+		<div class="card-body">
+			<h4 class="card-title">Install Instructions</h4>
+			<div class="card-text">
+				<p>Official Link: <a href="https://crystal-lang.org/install/">Install Crystal</a></p>
+				<p>This page displays all the platforms in which Crystal is available to run on.
+					Each platform you select has its own set of instructions on how to install the language.</p>
+			</div>
+		</div>
+	</div>
+		
+	<div class="card container content">
+		<div class="card-body">
+			<h4 class="card-title">Introductory Programs</h4>
+			<p class="card-text">Hello World Program in Crystal:</p>
+			<pre class="card-text">
+            <code>
+            puts "Hello World!"
+            </code>
+            </pre>
+			<p class="card-text">Hello World Program. Using the Object-Oriented Style:</p>
+			<pre class="card-text">
+            <code>
+            class HelloWorld
+                def initialize(@name : String)
+                end
+                def greeting
+                    puts "Hello #{@name}!"
+                end
+            end
+            g = HelloWorld.new("world")
+            g.greeting
+            </code>
+			</pre>
+		</div>
+    </div>
+    
+    <hr>
+    <h2 id="comparison">Comparison With Other Languages</h2>
+
+    <!-- Execution Time -->
+    <div class="card container content">
+        <div class="card-body">
+                <h5 class="card-title">Performance - Execution Time (Average Time/Task)</h5>
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col">Task</th>
+                            <th scope="col">Crystal</th>
+                            <th scope="col">Ruby</th>
+                            <th scope="col">C</th>
+                            <th scope="col">Go</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">BCrypt Hash</th>
+                            <td>1.181s</td>
+                            <td>nil</td>
+                            <td>nil</td>
+                            <td>0.255s</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pi Approximation</th>
+                            <td>0.010s</td>
+                            <td>nil</td>
+                            <td>nil</td>
+                            <td>0.001s</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>nil</td>
+                            <td>nil</td>
+                            <td>nil</td>
+                            <td>nil</td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+    </div>
+
+    <!-- Compile Time -->
+    <div class="card container content">
+        <div class="card-body">
+            <h5 class="card-title">Performance - Compile Time</h5>
+            <table class="card-text table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Program</th>
+                        <th scope="col">Crystal</th>
+                        <th scope="col">Ruby</th>
+                        <th scope="col">C</th>
+                        <th scope="col">Go</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">BCrypt Hash</th>
+                        <td>1.073s</td>
+                        <td>nil</td>
+                        <td>nil</td>
+                        <td>0.271s</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Pi Approximation</th>
+                        <td>0.978</td>
+                        <td>nil</td>
+                        <td>nil</td>
+                        <td>0.25s</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>nil</td>
+                        <td>nil</td>
+                        <td>nil</td>
+                        <td>nil</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Executable Size -->
+    <div class="card container content">
+        <div class="card-body">
+            <h5 class="card-title">Performance - Binary Size</h5>
+            <table class="card-text table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Program</th>
+                        <th scope="col">Crystal</th>
+                        <th scope="col">Ruby</th>
+                        <th scope="col">C</th>
+                        <th scope="col">Go</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">BCrypt Hash</th>
+                        <td>1554 KB</td>
+                        <td>n/a</td>
+                        <td>nil</td>
+                        <td>2374 KB</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Pi Approximation</th>
+                        <td>1332 KB</td>
+                        <td>n/a</td>
+                        <td>nil</td>
+                        <td>2085 KB</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">3</th>
+                        <td>nil</td>
+                        <td>n/a</td>
+                        <td>nil</td>
+                        <td>nil</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div style="display: flex" class="justify-content-center">
+        <iframe frameborder="0" style="height: 50vh; width: 50vw" src="https://repl.it/@Pizzahut91/Crystallll?lite=true&outputonly=1"></iframe>
+    </div>
+</body>
+

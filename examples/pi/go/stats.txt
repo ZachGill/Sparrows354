@@ -1,0 +1,3 @@
+Compile time    : 0.25s
+Executable size : 2085072 bytes
+Average time    : 0.001s
