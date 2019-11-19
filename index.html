@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
+    <link rel="stylesheet" type="text/css" href="./bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="bootstrap/navstyle.css">
-	<link rel="stylesheet" type="text/css" href="./bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="./styles.css">
 </head>
 <div class="topnav sticky-top d-flex opacity-80">
@@ -11,18 +11,15 @@
 	<a class="active" href="#">Home</a>
     <a href="#overview">Overview</a>
     <a href="#comparison">Comparison</a>
+    <a href="#typing">Typing</a>
     <a href="#concurrency">Concurrency</a>
 </div>
 
 
 <body>
-    <!-- <nav class="navbar navbar-light sticky-top bg-light">
-        <a class="navbar-brand" href="#">
-            <img src="./crystal-brand.svg" width="40" height="40" alt="">
-            Crystal - Sparrows
-        </a>
-    </nav> -->
     <h1 style="text-align: center">The Crystal Programming Language</h1>
+    
+    <!-- Overview (Kyle Tupper) -->
     <hr id="overview"></hr>
     <h2>History, References, Examples and Install</h2>
 
@@ -91,13 +88,49 @@
 		</div>
     </div>
     
+    <!-- Comparison (Zachary Gillenwater) -->
     <hr id="comparison">
     <h2>Comparison With Other Languages</h2>
 
-    <!-- Execution Time -->
     <div class="card container content">
         <div class="card-body">
-                <h5 class="card-title">Performance - Execution Time (Average Time/Task)</h5>
+            <h4 class="card-title">Crystal vs. Ruby vs. C</h4>
+            <div class="card-text">
+                <p>Crystal is, syntactically, very similar to Ruby - it's one of it's major selling points, and its inspiration.</p>
+                <p>However, it also takes a lot of ideas from compiled languages - C in particular.</p>
+                <b>Typing</b>
+                <p>As is discussed later, Crystal has static, inferred typing. Compare this with C, which has non-inferred, but still static typing; and Ruby, which has dynamic typing (🤮)</p>
+                <b>Syntax</b>
+                <p>Crystal is meant to look incredibly similar to Ruby. Even the most basic "Hello World" is the same in both languages.</p>
+                <p>Because of this, Crystal inherits the oft-praised visual appeal of Ruby code, and is quite easy to read.</p>
+                <b>Portability</b>
+                <p>Crystal and C could both be considered less portable than Ruby, purely because they are compiled languages.</p>
+                <p>Ruby, being interpreted, simply needs an interpreter implementation on the target system and a program can be run. Crystal and C need their programs recompiled for each target system, which could get annoying if you were, say, designing something for a wide audience.</p>
+                <p>In a similar vein, Crystal currently only targets a few platforms, meaning that it won't run on your old PowerPC Mac, or on your toaster (hold back those tears, stay strong)</p>
+                <b>Metaprogramming</b>
+                <p>Another idea Crystal took from Ruby is metaprogramming. That is, treating programs as any other data and modifying them at runtime.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card container content">
+            <div align="center" class="card-body">
+                <h4 class="card-title">Metaprogramming: Example</h4>
+                <p class="card-text">(I'm sure this is technically possible in C, but is it this easy?)</p>
+                <iframe src="https://play.crystal-lang.org/#/r/81kq/edit"
+                    width="100%"
+                    height="500px"
+                    frameborder="1"
+                    scrolling="yes">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Performance -->
+    <div class="card container content">
+        <div class="card-body">
+                <h4 class="card-title">Performance Comparison</h4>
                 <table class="card-text table">
                     <thead class="thead-light">
                         <tr>
@@ -105,118 +138,35 @@
                             <th scope="col">Crystal</th>
                             <th scope="col">Ruby</th>
                             <th scope="col">C</th>
-                            <th scope="col">Go</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">BCrypt Hash</th>
-                            <td>1.181s</td>
-                            <td>nil</td>
-                            <td>nil</td>
-                            <td>0.255s</td>
+                            <th scope="row">Binary Trees</th>
+                            <td>3.19s</td>
+                            <td>27.92s</td>
+                            <td>5.08s</td>
                         </tr>
                         <tr>
-                            <th scope="row">Pi Approximation</th>
-                            <td>0.010s</td>
-                            <td>nil</td>
-                            <td>nil</td>
-                            <td>0.001s</td>
+                            <th scope="row">Mandelbrot Set</th>
+                            <td>10.98s</td>
+                            <td>140.04s</td>
+                            <td>10.13s</td>
                         </tr>
                         <tr>
-                            <th scope="row">3</th>
-                            <td>nil</td>
-                            <td>nil</td>
-                            <td>nil</td>
-                            <td>nil</td>
+                            <th scope="row">Pi Digits</th>
+                            <td>3.72s</td>
+                            <td>6.35s</td>
+                            <td>0.85s</td>
                         </tr>
                     </tbody>
                 </table>
+                <a class="card-text" href="https://github.com/kostya/crystal-benchmarks-game">source</a>
         </div>
     </div>
 
-    <!-- Compile Time -->
-    <div class="card container content">
-        <div class="card-body">
-            <h5 class="card-title">Performance - Compile Time</h5>
-            <table class="card-text table">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Program</th>
-                        <th scope="col">Crystal</th>
-                        <th scope="col">Ruby</th>
-                        <th scope="col">C</th>
-                        <th scope="col">Go</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">BCrypt Hash</th>
-                        <td>1.073s</td>
-                        <td>nil</td>
-                        <td>nil</td>
-                        <td>0.271s</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Pi Approximation</th>
-                        <td>0.978</td>
-                        <td>nil</td>
-                        <td>nil</td>
-                        <td>0.25s</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>nil</td>
-                        <td>nil</td>
-                        <td>nil</td>
-                        <td>nil</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- Executable Size -->
-    <div class="card container content">
-        <div class="card-body">
-            <h5 class="card-title">Performance - Binary Size</h5>
-            <table class="card-text table">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Program</th>
-                        <th scope="col">Crystal</th>
-                        <th scope="col">Ruby</th>
-                        <th scope="col">C</th>
-                        <th scope="col">Go</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">BCrypt Hash</th>
-                        <td>1554 KB</td>
-                        <td>n/a</td>
-                        <td>nil</td>
-                        <td>2374 KB</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Pi Approximation</th>
-                        <td>1332 KB</td>
-                        <td>n/a</td>
-                        <td>nil</td>
-                        <td>2085 KB</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">3</th>
-                        <td>nil</td>
-                        <td>n/a</td>
-                        <td>nil</td>
-                        <td>nil</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <hr id="Typing">
+    <!-- Typing (Mason Humpherys) -->
+    <hr id="typing">
     <h2>Typing</h2>
     <div class="card container content">
 		<div class="card-body">
