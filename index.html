@@ -216,6 +216,122 @@
             </table>
         </div>
     </div>
+    <hr id="Typing">
+    <h2>Typing</h2>
+    <div class="card container content">
+		<div class="card-body">
+			<div class="card-text">
+                <p>Crystal is heavily object oriented, and each object has a type. A comprehensive list of type literals can be found here: <a href="https://crystal-lang.org/reference/syntax_and_semantics/literals.html">Crystal Literals</a></p>
+                <p> Something special to note is that Crystal has multiple types for ints, with each differing type defining their length or sign. There is an int type for sizes 8, 16, 32, and 64, with unsigned version for each as well. Examples : Int32, UInt64, Int8, UInt8 </p>
+                <p> Crystal is designed to avoid type declaration if possible, but that doesn't mean it is dynamically typed. The compiler attempts to infer the type of each variable based on declarations, so most type errors are still caught at compile time rather than run time.</p>
+                <p> There are a set of rules that the compiler follows when attempting to figure out the type of an object. For example, if an object is assigned a literal, it will be the type of that literal.</p>
+                <pre>
+                <code>
+    var = "hello world"
+    puts typeof(var)    # Since "hello world" is a literal, var is a String
+                </code>
+                </pre>
+                <p> If you can easily infer the type of a variable by reading the code, it is very likely that one of the compilers many type inference rules was able to make the same conclusion.</p>
+                <p> Once the compiler has decided the object's type based off of its declaration, any methods used on it that don't match its type will cause a compile-time error.</p>
+                <p> However, sometimes it isn't certain what type a variable is. In Crystal, it is possible for a variable to have multiple possible initial values with different types.</p>
+                <p> If this happens, the compiler type checks the variable as a Union of any possible types it might be. In the following example, it's possible that foo is assigned either a String or Int32 value. The compiler handles its type as the Union (String | Int32) when it checks for illegal options.</p>
+                <pre>
+                <code>
+    var = "hello world"
+    rand > 0.5 ? (foo = var) : (foo = 2)   # Another typing rule: since var is String, foo is String
+    puts typeof(foo)    # Compile time type, a Union
+    puts foo.class      # Run time type
+    puts foo            # puts can take either type, so no errors
+
+    # puts foo.upcase   - Results in a compile time error, since the 
+    #                     upcase method isn't defined for Int32
+                </code>
+                </pre>
+                <p> This also works for variables that might not have been initialized. The Nil type is added to the variable's type union.</p>
+                <pre>
+                <code>
+    if (rand > 0.5)
+        bar = "This may or may not show up"
+    end
+
+    if(bar.nil?)
+        puts "Error! Variable not initialized"
+    else 
+        puts bar
+    end
+                </code>
+                </pre>
+                <p> Alternatively, on of the many provided type checking methods could be used to handle Unions. The nil? method was shown earlier, but other more complex methods are provided too. The responds_to? method checks to see if a variable would respond to a given method.</p>
+                <pre>
+                <code>
+    rand > 0.5 ? (foo = "wow!") : (foo = 2)
+
+    if(foo.responds_to?(:upcase))
+        puts foo.upcase
+    else 
+        puts "Method \"upcase\" is not defined for foo"
+    end
+                </code>
+                </pre>
+                <p> Method variables don't have to be typed, considering illegal actions on a explicitly defined type and an infered type will both be caught at compile time. However, just like with normal variables, it might not always be obvious to the somebody reading the code what the type of a variable is if it isn't defined.</p>
+                <p> Additionally, typing methods variables can be used for overloading, which is another way of handling Unity types if needed. A variable's type can be defined by using the form "var : Type".</p>
+                <pre>
+                <code>
+    rand > 0.5 ? (foo = "wow!") : (foo = 2)
+
+    # Methods return the value of their final line by default, but the return keyword can be used
+    # The return type of a method can also be infered.
+
+    def upper(bar : String)
+        bar.upcase
+    end
+
+    def upper(num : Int32)
+        "Variable is not a String!"
+    end
+
+    puts upper foo      # The program will use the correct method
+                </code>
+                </pre>
+                <p> In the following example, the * character is a "splat". It allows any number of variables to be passed into the function. Since the splat is not explicitly type-defined, the variables can be of any type, as long as no incompatible methods are called.</p>
+                <p> The passed in variables are stored as a Tuple, with each element in the Tuple having its own defined type.</p>
+                <pre>
+                <code>
+    def typeCount(*vars)
+        puts "The vars Tuple has the following types: #{vars.class}" 
+        strCount = 0
+        numCount = 0
+        otherCount = 0
+        vars.each do |var|
+        if (var.responds_to?(:/)) # There are many numeric types (Int32, Int64, Float32...)
+            numCount += 1
+        elsif (var.is_a?(String)) 
+            strCount += 1
+        else
+            otherCount += 1
+        end
+        end
+        puts "Number of numbers: #{numCount}"
+        puts "Number of strings: #{strCount}"
+        puts "Number of other objects: #{otherCount}"
+    end
+
+    typeCount 1, 2, 3.14, "hello", "goodbye", [1,2,3]
+                </code>
+                </pre>
+                <p>A more complete documentation of Crystal's typing system can be found here: <a href="https://crystal-lang.org/reference/syntax_and_semantics/types_and_methods.html">Crystal Types</a></p>
+                <p>The following is a collected demonstration of all of the code examples used in this section:</p>
+                <div align="center">
+                    <iframe src="https://play.crystal-lang.org/#/r/81ki/edit"
+                            width="100%"
+                            height="500px"
+                            frameborder="1"
+                            scrolling="yes">
+                    </iframe>
+                </div>
+            </div>
+		</div>
+    </div>
     <!-- Concurrency (Chris Haney) -->
     <hr id="concurrency"></hr>
     <h2 style="text-align: center">Concurrency</h2>
