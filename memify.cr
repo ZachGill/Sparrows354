@@ -4,6 +4,18 @@ require "oauth2" # Used to authorize Spotify requests such as searching for trac
 require "base64" # (See Client Credentials Flow at https://developer.spotify.com/documentation/general/guides/authorization-guide/)
 require "json"
 
+class SpotifyTracks
+  JSON.mapping(
+    tracks: Array(SpotifyItem)
+  )
+end
+
+class SpotifyItem
+  JSON.mapping(
+    name: String
+  )
+end
+
 ### Spotify OAuth Code (See Client Credentials Flow at https://developer.spotify.com/documentation/general/guides/authorization-guide/)
 
 # 1. Encode Memify's client ID and secret ID to Base64 as defined by Client Credentials Flow
@@ -41,7 +53,7 @@ spoofySearchResponse = HTTP::Client.get "https://api.spotify.com/v1/search?" + s
 # 4. Parse the song title from our search query response (HOW???)
 spoofySearchResponseJSON = JSON.parse(spoofySearchResponse.body.to_json)#.lines.[35] # NEED TO PARSE SONG TITLE FROM RESPONSE, tracks.name field
 puts spoofySearchResponseJSON
-spoofySongString = "" #parsed JSON
+spoofySongString = SpotifyTracks.from_json(spoofySearchResponseJSON).tracks[0].name #parsed JSON
 
 
 ### imgFlip Code
@@ -50,7 +62,7 @@ spoofySongString = "" #parsed JSON
 memeID = "61544" # imgflip ID of our meme, 61544 ID is success kid
 imgFlipUser = "ilovemaymays"
 imgFlipPass = "ilovememesiloveem"
-memeTopText = "Song Title" # REPLACE WITH SONG TITLE FOUND BY SPOTIFY
+memeTopText = spotifySongString # REPLACE WITH SONG TITLE FOUND BY SPOTIFY
 memeBottomText = "Like a boss!"
 
 # 2. Create the params for the ImgFlip request using the strings we made in step 1
