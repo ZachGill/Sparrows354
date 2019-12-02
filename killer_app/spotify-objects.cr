@@ -1,9 +1,6 @@
 class SpotifyAuthResponse
     JSON.mapping(
-        access_token: String,
-        token_type: String,
-        expires_in: Int32,
-        scope: String
+        access_token: String
     )
 end
 
@@ -19,7 +16,7 @@ class SpotifyTrack
     )
 end
 
-class SpotifyTracks
+class SpotifySearchResponse
     JSON.mapping(
         tracks: SpotifyTrack
     )
