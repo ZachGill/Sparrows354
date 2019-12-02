@@ -40,7 +40,7 @@ spoofySearchHeader = HTTP::Headers{"Authorization" => "Bearer " + spoofyOAuth2Ac
 spoofySearchResponse = HTTP::Client.get "https://api.spotify.com/v1/search?" + spoofySearchParams,spoofySearchHeader # Execute the search query using the auth key created above
 
 # 4. Parse the song title from our search query response
-spoofySongString = SpotifySearchObject.from_json(spoofySearchResponse.body).tracks.items[0].name #parsed JSON
+spoofySongString = SpotifySearchResponse.from_json(spoofySearchResponse.body).tracks.items[0].name #parsed JSON
 
 
 ### imgFlip Code
