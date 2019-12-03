@@ -1,3 +1,5 @@
+### Classes for parsing Spotify responses into ###
+
 class SpotifyAuthResponse
     JSON.mapping(
         access_token: String

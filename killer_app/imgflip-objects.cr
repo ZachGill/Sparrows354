@@ -1,3 +1,5 @@
+### Classes for parsing ImgFlip responses into ###
+
 class ImgFlipData
     JSON.mapping(
         url: String
