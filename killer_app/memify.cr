@@ -6,6 +6,8 @@ require "oauth2"
 # (See Client Credentials Flow at https://developer.spotify.com/documentation/general/guides/authorization-guide/)
 require "base64"
 require "json"
+# For generating random indexes
+require "random"
 
 # Local imports require a file path
 require "./spotify-objects"
@@ -25,10 +27,11 @@ spoofyOAuth2Headers = HTTP::Headers{"Authorization" => memifyAuthorizeValue,
 
 # 3. Execute a POST request using the header created above
 begin
-    spoofyOAuth2Response = HTTP::Client.post "https://accounts.spotify.com/api/token",
+    spoofyOAuth2Response = HTTP::Client.post("https://accounts.spotify.com/api/token",
                                              spoofyOAuth2Headers,
-                                             "grant_type=client_credentials" # URL,Header,Body
+                                             "grant_type=client_credentials") # URL,Header,Body
 rescue ex
+    # The || operator here will use "unknown" in place of the exception message when the message is nil
     puts "Error authorizing with Spotify: " + (ex.message || "unknown")
     exit(1)
 end
@@ -89,14 +92,37 @@ end
 
 ### ImgFlip Code ###
 
+# 1. Get Top 100 Memes (see get_memes at https://api.imgflip.com/)
+
+# Get memes
+begin
+    memesResponse = HTTP::Client.get("https://api.imgflip.com/get_memes")
+rescue ex
+    puts "Error sending request to ImgFlip: " + (ex.message || "unknown")
+    exit(1)
+end
+
+# Parse response
+begin
+    memes = ImgFlipMemesResponse.from_json(memesResponse.body).data.memes
+rescue
+    puts "Invalid response from ImgFlip: #{memesResponse.body}"
+    exit(1)
+end
+
+meme = memes[Random.rand(memes.size)]
+memeID = meme.id
+puts "Using #{meme.name}..."
+
 # 1. Create the template for our meme (See caption_image at https://api.imgflip.com/)
 
 # imgflip ID of our meme, 61544 ID is success kid
-memeID = "61544"
+# memeID = "61544"
 
 # Set top text to the song we found in Spotify
 memeTopText = spoofySongString
 memeBottomText = "Like a boss!"
+memeBottomText = "BOTTOM TEXT"
 
 # 2. Create the params for the ImgFlip request using the strings we made in step 1
 imgFlipParams = HTTP::Params.encode({"template_id" => memeID,
@@ -107,7 +133,7 @@ imgFlipParams = HTTP::Params.encode({"template_id" => memeID,
 
 #3. Create and post the meme to the imgflip account specified in step 1
 begin
-    memeResponse = HTTP::Client.exec "POST","https://api.imgflip.com/caption_image?#{imgFlipParams}"
+    captionResponse = HTTP::Client.exec("POST","https://api.imgflip.com/caption_image?#{imgFlipParams}")
 rescue ex
     puts "Error sending request to ImgFlip: " + (ex.message || "unknown")
     exit(1)
@@ -115,17 +141,17 @@ end
 
 #4. Print the URL from our successful response so we can show off our new meme
 begin
-    memeURL = ImgFlipResponse.from_json(memeResponse.body).data.url
+    memeURL = ImgFlipCaptionResponse.from_json(captionResponse.body).data.url
 
     # This causes an exception to be thrown
     #memeURL = ImgFlipResponse.from_json(%()).data.url
 rescue
-    puts "Invalid response from ImgFlip: #{memeResponse.body}"
+    puts "Invalid response from ImgFlip: #{captionResponse.body}"
     exit(1)
 end
 
 puts "Your meme is ready! View and download at: "
-puts memeURL # Parse the body so it's only the URL and delete the extraneous \\'s
+puts memeURL
 
 # 5. Opens the URL in the default browser (MAC OS ONLY!!!, don't think it's possible to check for OS)
 #sleep 3.seconds
