@@ -121,8 +121,8 @@ puts "Using #{meme.name}..."
 
 # Set top text to the song we found in Spotify
 memeTopText = spoofySongString
-memeBottomText = "Like a boss!"
-memeBottomText = "BOTTOM TEXT"
+bottomTexts = {"Like a boss!", "BOTTOM TEXT"}
+memeBottomText = bottomTexts[Random.rand(bottomTexts.size)]
 
 # 2. Create the params for the ImgFlip request using the strings we made in step 1
 imgFlipParams = HTTP::Params.encode({"template_id" => memeID,
